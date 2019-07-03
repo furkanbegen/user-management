@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <title>User Management</title>
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+
+    <h5 class="my-0 mr-md-auto font-weight-normal">User Management</h5>
+</div>
+
+<div class="container">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success" id="createUser" data-toggle="modal" data-target="#createUserModal">
+        Create New User
+    </button>
+
+    <div class="row loading">
+        <div class="col-12">
+            <p class="text-center"><img src="loading.gif" alt="loadıng" width="48px" height="48px"></p>
+            <p class="text-center">İşleminiz devam ediyor. Lürfen bekleyiniz.</p>
+        </div>
+        <div class="error"></div>
+    </div>
+
+    <table class="table table-hover" id="userTable">
+        <thead>
+        <tr>
+            <th scope="col">İsim</th>
+            <th scope="col">Soy İsim</th>
+            <th scope="col">Güncelle</th>
+            <th scope="col">Sil</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Create User  Modal -->
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createUserModalTitle">Kullanıcı Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal2">
+                <div class="error"></div>
+                <form id="createUserForm">
+                    <div class="form-group">
+                        <label for="firstName">İsim</label>
+                        <input type="text" class="form-control" id="firstName" required="required" aria-describedby="emailHelp"
+                               placeholder="İsim giriniz">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Soy İsim</label>
+                        <input type="text" class="form-control" id="lastName" required="required" placeholder="Soyisim giriniz">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Telefon Numarası</label>
+                        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required="required" placeholder="Telefon numarası giriniz" >
+                    </div>
+                </form>
+                <div class="row loading">
+                    <div class="col-12">
+                        <p class="text-center"><img src="loading.gif" alt="loadıng" width="48px" height="48px"></p>
+                        <p class="text-center">İşleminiz devam ediyor. Lürfen bekleyiniz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-primary" id="createNewUserButton">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Update User Modal -->
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateUserModalTitle">Kullanıcı Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal1">
+                <div class="error"></div>
+                <form id="updateUserForm">
+                    <div class="form-group">
+                        <label for="firstName">İsim</label>
+                        <input type="text" class="form-control" id="updateFirstName" name="updateFirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Soy İsim</label>
+                        <input type="text" class="form-control" id="updateLastName" name="updateLastName">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="userId" name="userId">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Telefon Numarası</label>
+                        <input type="text" class="form-control" id="updatePhoneNumber" name="updatePhoneNumber">
+                    </div>
+                </form>
+                <div class="row loading">
+                    <div class="col-12">
+                        <p class="text-center"><img src="loading.gif" alt="loadıng" width="48px" height="48px"></p>
+                        <p class="text-center">İşleminiz devam ediyor. Lürfen bekleyiniz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-primary" id="updateUserButton">Güncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalTitle">Kullanıcı Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal3">
+                <div class="error"></div>
+                <i class="fa fa-exclamation-triangle"></i> Kullanıcıyı Silmek istediğinizden emin misiniz?
+                <form id="deleteUserForm">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="deleteUserId" name="deleteUserId">
+                    </div>
+                </form>
+                <div class="row loading">
+                    <div class="col-12">
+                        <p class="text-center"><img src="loading.gif" alt="loadıng" width="48px" height="48px"></p>
+                        <p class="text-center">İşleminiz devam ediyor. Lürfen bekleyiniz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-danger" id="deleteUserButton">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{main.js}"/>
+<script>
+
+</script>
+</body>
+</html>
